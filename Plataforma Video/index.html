@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Plataforma de Videotutoriales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+        #mainVideo {
+            width: 80%;
+            max-width: 800px;
+        }
+        #videoList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+        .videoContainer {
+            width: 300px;
+            margin: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        video {
+            width: 100%;
+        }
+        h2 {
+            padding: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        @media (max-width: 600px) {
+            .videoContainer {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Solicita el código de acceso
+        var codigo = prompt("Por favor, introduce el código de acceso:");
+
+        // Verifica el código de acceso
+        if (codigo === 'turri') {
+            // Si el código es correcto, muestra los videos
+            document.write('<h1>Los tutoriales de peluche</h1><video id="mainVideo" controls></video><div id="videoList"></div>');
+
+            // Lista de tus videos
+            var videos = [];
+            for (var i = 1; i <= 30; i++) {
+                var num = ("0" + i).slice(-2);  // Asegura que el número siempre tenga dos dígitos
+                videos.push({title: 'Videotutorial ' + i, url: 'videos/tutorial ' + num + '.mp4'});
+            }
+
+            // Función para mostrar los videos en la página
+            function displayVideos() {
+                var videoList = document.getElementById('videoList');
+                var mainVideo = document.getElementById('mainVideo');
+                mainVideo.src = videos[0].url;  // Carga el primer video en el reproductor principal
+                videos.forEach(function(video, index) {
+                    var videoContainer = document.createElement('div');
+                    videoContainer.className = 'videoContainer';
+                    var videoElement = document.createElement('video');
+                    videoElement.src = video.url;
+                    videoElement.addEventListener('click', function() {
+                        mainVideo.src = video.url;
+                        mainVideo.play();
+                    });
+                    videoContainer.appendChild(videoElement);
+                    var titleElement = document.createElement('h2');
+                    titleElement.textContent = video.title;
+                    videoContainer.appendChild(titleElement);
+                    videoList.appendChild(videoContainer);
+                });
+            }
+
+            // Llama a la función para mostrar los videos
+            displayVideos();
+        } else {
+            // Si el código es incorrecto, muestra un mensaje de error
+            document.write('<h1>Código de acceso incorrecto</h1>');
+        }
+    </script>
+</body>
+</html>
